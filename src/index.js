@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { cancelable, CancelablePromise } from 'cancelable-promise';
+const promises = [
+  cancelable(new Promise((resolve) => setTimeout(resolve, 1))),
+  new CancelablePromise((resolve) => setTimeout(resolve, 1)),
+];
+
+for (const promise of promises) {
+  promise.then(() => console.log('not logged'));
+  promise.cancel();
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <h1> HELLO </h1>
   </React.StrictMode>,
   document.getElementById('root')
 );
